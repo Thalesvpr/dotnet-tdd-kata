@@ -15,11 +15,15 @@ public class StringCalculator
         throw new NotImplementedException();
     }
 
-    private int SumParts(string input)
+    private static int SumParts(string input)
     {
-        var parts = input.Split(',');
-        var left = int.Parse(parts[0]);
-        var right = int.Parse(parts[1]);
-        return left + right;
+        var parts = input.Split(',', StringSplitOptions.RemoveEmptyEntries);
+        var sum = 0;
+        foreach (var part in parts)
+        {
+            sum += int.Parse(part);
+        }
+            
+        return sum;
     }
 }
