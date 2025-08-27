@@ -48,5 +48,14 @@ public class Tests
         Assert.Equal(6, result);
     }
 
+    [Fact]
+    public void Given_Negatives_When_Sum_Then_ThrowsWithAllNegatives()
+    {
+        var calc = new StringCalculator();
+
+        var ex = Assert.Throws<InvalidOperationException>(() => calc.Sum("1,-2,3,-5"));
+        Assert.Contains("-2,-5", ex.Message);
+    }
+
 
 }
