@@ -106,4 +106,15 @@ public class Tests
         Assert.Equal(6, result);
     }
 
+    
+    [Fact]
+    public void Given_MultipleDelimiters_When_Sum_Then_UsesAll()
+    {
+        var calc = new StringCalculator();
+
+        var result = calc.Sum("//[*][%]\n1*2%3");
+
+        Assert.Equal(6, result);
+    }
+
 }
