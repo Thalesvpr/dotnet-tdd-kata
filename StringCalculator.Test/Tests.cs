@@ -38,5 +38,15 @@ public class Tests
         Assert.Equal(10, result);
     }
 
+    [Fact]
+    public void Sum_HandlesCommaAndNewlineAsDelimiters()
+    {
+        var calc = new StringCalculator();
+
+        var result = calc.Sum("1\n2,3");
+
+        Assert.Equal(6, result);
+    }
+
 
 }
