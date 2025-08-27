@@ -17,14 +17,15 @@ public class StringCalculator
 
 
     private static bool IsSingleNumber(string input) =>
-        !input.Contains(',');
+        !input.Contains(',') || !input.Contains('\n');
 
     private static int ParseSingle(string input) =>
         int.Parse(input);
 
     private static int SumParts(string input)
     {
-        var parts = input.Split(',', StringSplitOptions.RemoveEmptyEntries);
+        var replace = input.Replace('\n', ',');
+        var parts = replace.Split(',', StringSplitOptions.RemoveEmptyEntries);
         var sum = 0;
         foreach (var part in parts)
         {
