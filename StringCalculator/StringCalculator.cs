@@ -9,7 +9,11 @@ public class StringCalculator
         if (HasDelimiters(input))
             return SumParts(input);
         
-        return int.Parse(input);
+        var n = int.Parse(input);
+        if (n < 0)
+            throw new InvalidOperationException($"Negatives not allowed: {n}");
+        
+        return n;
     }
 
     
@@ -26,6 +30,16 @@ public class StringCalculator
     {
 
         var parts = NormalizeToParts(input);
+        
+        var negatives = new List<string>(parts.Length);
+
+        foreach (var part in parts)
+        {
+            if (part.Contains("-")) negatives.Add(part);
+        }
+        if (negatives.Count != 0) throw new InvalidOperationException(
+            $"Negatives not allowed: {string.Join(",", negatives)}");
+        
         var sum = 0;
         foreach (var part in parts)
         {
