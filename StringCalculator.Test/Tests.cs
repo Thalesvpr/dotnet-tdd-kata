@@ -78,4 +78,22 @@ public class Tests
     }
 
 
+    [Fact]
+    public void Given_CustomSingleCharDelimiter_When_Sum_Then_UsesIt()
+    {
+        var calc = new StringCalculator();
+
+        var result = calc.Sum("//;\n1;2");
+
+        Assert.Equal(3, result);
+    }
+
+    [Fact]
+    public void Given_CustomSingleCharDelimiter_When_CommaIsUsed_Then_Fails()
+    {
+        var calc = new StringCalculator();
+        
+        Assert.Throws<FormatException>(() => calc.Sum("//;\n1,2"));
+    }
+    
 }
