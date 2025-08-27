@@ -27,5 +27,16 @@ public class Tests
         var result = calc.Sum("3,5");
         Assert.Equal(8, result);
     }
+    
+    [Fact]
+    public void Given_MultipleNumbersSeparatedByComma_When_Sum_Then_ReturnsTheirSum()
+    {
+        var calc = new StringCalculator();
+
+        var result = calc.Sum("1,2,3,4");
+
+        Assert.Equal(10, result);
+    }
+
 
 }
