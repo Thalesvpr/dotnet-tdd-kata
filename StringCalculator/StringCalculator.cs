@@ -49,7 +49,7 @@ public class StringCalculator
     {
         var sum = 0;
         
-        foreach (var n in numbers) sum += n;
+        foreach (var n in numbers) if (n <= 1000) sum += n;
         return sum;
     }
 }
