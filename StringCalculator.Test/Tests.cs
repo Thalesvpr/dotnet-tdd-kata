@@ -57,5 +57,25 @@ public class Tests
         Assert.Contains("-2,-5", ex.Message);
     }
 
+    [Fact]
+    public void Given_NumbersGreaterThan1000_When_Sum_Then_IgnoreThem()
+    {
+        var calc = new StringCalculator();
+
+        var result = calc.Sum("2,1001");
+
+        Assert.Equal(2, result);
+    }
+
+    [Fact]
+    public void Given_1000CountsBut1001Ignored_When_Sum_Then_Return1001()
+    {
+        var calc = new StringCalculator();
+
+        var result = calc.Sum("1000,1,1001");
+
+        Assert.Equal(1001, result);
+    }
+
 
 }
