@@ -19,4 +19,13 @@ public class Tests
         var result = calculator.Sum("1");
         result.Should().Be(1);
     }
+    
+    [Fact]
+    public void Given_TwoNumbersSeparatedByComma_When_Sum_Then_ReturnsSum()
+    {
+        var calc = new StringCalculator();
+        var result = calc.Sum("3,5");
+        Assert.Equal(8, result);
+    }
+
 }
