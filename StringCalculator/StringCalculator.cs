@@ -6,26 +6,26 @@ public class StringCalculator
     {
         if (string.IsNullOrEmpty(input)) return 0;
 
-        if (IsSingleNumber(input))
-            return ParseSingle(input);
-
-        if (input.Contains(','))
+        if (HasDelimiters(input))
             return SumParts(input);
-
-        throw new NotImplementedException();
+        
+        return int.Parse(input);
     }
 
+    
+    private static bool HasDelimiters(string input) =>
+        input.Contains(',') || input.Contains('\n');
 
-    private static bool IsSingleNumber(string input) =>
-        !input.Contains(',') || !input.Contains('\n');
-
-    private static int ParseSingle(string input) =>
-        int.Parse(input);
-
-    private static int SumParts(string input)
+    private static string[] NormalizeToParts(string input)
     {
         var replace = input.Replace('\n', ',');
-        var parts = replace.Split(',', StringSplitOptions.RemoveEmptyEntries);
+        return replace.Split(',', StringSplitOptions.RemoveEmptyEntries);
+    }
+    
+    private static int SumParts(string input)
+    {
+
+        var parts = NormalizeToParts(input);
         var sum = 0;
         foreach (var part in parts)
         {
