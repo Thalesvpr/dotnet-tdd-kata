@@ -96,4 +96,14 @@ public class Tests
         Assert.Throws<FormatException>(() => calc.Sum("//;\n1,2"));
     }
     
+    [Fact]
+    public void Given_VariableLengthDelimiter_When_Sum_Then_UsesIt()
+    {
+        var calc = new StringCalculator();
+
+        var result = calc.Sum("//[***]\n1***2***3");
+
+        Assert.Equal(6, result);
+    }
+
 }
