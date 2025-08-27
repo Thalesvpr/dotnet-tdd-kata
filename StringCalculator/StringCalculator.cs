@@ -12,11 +12,7 @@ public class StringCalculator
         
         var parts = SplitDefault(input);
         
-        var numbers = ToInts(parts);
-        
-        ThrowIfNegatives(numbers);
-        
-        return SumUpTo1000(numbers);
+        return ProcessNumbers(parts);
     }
     
     
@@ -30,11 +26,7 @@ public class StringCalculator
         
         var parts = body.Split(delimiters, StringSplitOptions.RemoveEmptyEntries);
         
-        var numbers = ToInts(parts);
-        
-        ThrowIfNegatives(numbers);
-        
-        return SumUpTo1000(numbers);
+        return ProcessNumbers(parts);
     }
     
     
@@ -92,35 +84,23 @@ public class StringCalculator
     }
     
     
-    private static int[] ToInts(string[] parts)
+    private static int ProcessNumbers(string[] parts)
     {
-        var arr = new int[parts.Length];
-        
-        for (var i = 0; i < parts.Length; i++)
-            arr[i] = int.Parse(parts[i]);
-        
-        return arr;
-    }
-    
-    
-    private static void ThrowIfNegatives(int[] numbers)
-    {
+        var sum = 0;
         var negatives = new List<int>();
         
-        foreach (var n in numbers)
-            if (n < 0) negatives.Add(n);
+        foreach (var part in parts)
+        {
+            var number = int.Parse(part);
+            
+            if (number < 0)
+                negatives.Add(number);
+            else if (number <= 1000)
+                sum += number;
+        }
         
         if (negatives.Count > 0)
             throw new InvalidOperationException($"Negatives not allowed: {string.Join(",", negatives)}");
-    }
-    
-    
-    private static int SumUpTo1000(int[] numbers)
-    {
-        var sum = 0;
-        
-        foreach (var n in numbers)
-            if (n <= 1000) sum += n;
         
         return sum;
     }
