@@ -28,7 +28,7 @@ public class StringCalculator
     {
         var (delimiter, body) = ParseHeader(input);
         
-        var parts = body.Split(delimiter, StringSplitOptions.RemoveEmptyEntries);
+        var parts = body.Split(new[] { delimiter }, StringSplitOptions.RemoveEmptyEntries);
         
         var numbers = ToInts(parts);
         
@@ -38,21 +38,23 @@ public class StringCalculator
     }
     
     
-    private static (char delimiter, string body) ParseHeader(string input)
+    private static (string delimiter, string body) ParseHeader(string input)
     {
         var nl = input.IndexOf('\n');
-        
-        if (nl < 0) 
-            throw new FormatException("Invalid header");
+        if (nl < 0) throw new FormatException("Invalid header");
         
         var header = input.Substring(2, nl - 2);
-        
-        if (header.Length != 1) 
-            throw new FormatException("Only single-char delimiter");
-        
         var body = input.Substring(nl + 1);
         
-        return (header[0], body);
+        if (header.StartsWith("[") && header.EndsWith("]"))
+        {
+            var delim = header.Substring(1, header.Length - 2);
+            if (delim.Length == 0) throw new FormatException("Empty delimiter");
+            return (delim, body);
+        }
+        
+        if (header.Length != 1) throw new FormatException("Only single-char delimiter");
+        return (header, body);
     }
     
     
