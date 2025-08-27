@@ -25,7 +25,7 @@ public class Tests
     {
         var calc = new StringCalculator();
         var result = calc.Sum("3,5");
-        Assert.Equal(8, result);
+        result.Should().Be(8);
     }
     
     [Fact]
@@ -35,7 +35,7 @@ public class Tests
 
         var result = calc.Sum("1,2,3,4");
 
-        Assert.Equal(10, result);
+        result.Should().Be(10);
     }
 
     [Fact]
@@ -45,7 +45,7 @@ public class Tests
 
         var result = calc.Sum("1\n2,3");
 
-        Assert.Equal(6, result);
+        result.Should().Be(6);
     }
 
     [Fact]
@@ -53,8 +53,8 @@ public class Tests
     {
         var calc = new StringCalculator();
 
-        var ex = Assert.Throws<InvalidOperationException>(() => calc.Sum("1,-2,3,-5"));
-        Assert.Contains("-2,-5", ex.Message);
+        var act = () => calc.Sum("1,-2,3,-5");
+        act.Should().Throw<InvalidOperationException>().WithMessage("*-2,-5*");
     }
 
     [Fact]
@@ -64,7 +64,7 @@ public class Tests
 
         var result = calc.Sum("2,1001");
 
-        Assert.Equal(2, result);
+        result.Should().Be(2);
     }
 
     [Fact]
@@ -74,7 +74,7 @@ public class Tests
 
         var result = calc.Sum("1000,1,1001");
 
-        Assert.Equal(1001, result);
+        result.Should().Be(1001);
     }
 
 
@@ -85,7 +85,7 @@ public class Tests
 
         var result = calc.Sum("//;\n1;2");
 
-        Assert.Equal(3, result);
+        result.Should().Be(3);
     }
 
     [Fact]
@@ -93,7 +93,8 @@ public class Tests
     {
         var calc = new StringCalculator();
         
-        Assert.Throws<FormatException>(() => calc.Sum("//;\n1,2"));
+        var act = () => calc.Sum("//;\n1,2");
+        act.Should().Throw<FormatException>();
     }
     
     [Fact]
@@ -103,7 +104,7 @@ public class Tests
 
         var result = calc.Sum("//[***]\n1***2***3");
 
-        Assert.Equal(6, result);
+        result.Should().Be(6);
     }
 
     
@@ -114,7 +115,7 @@ public class Tests
 
         var result = calc.Sum("//[*][%]\n1*2%3");
 
-        Assert.Equal(6, result);
+        result.Should().Be(6);
     }
 
 }

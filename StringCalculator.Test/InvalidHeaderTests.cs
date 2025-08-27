@@ -1,5 +1,6 @@
 ﻿using System;
 using Xunit;
+using FluentAssertions;
 
 namespace StringCalculator.Test;
 
@@ -9,34 +10,39 @@ public class InvalidHeaderTests
     public void When_HeaderHasNoNewline_Then_ShouldThrow()
     {
         var calc = new StringCalculator();
-        Assert.Throws<FormatException>(() => calc.Sum("//[***]1***2"));
+        var act = () => calc.Sum("//[***]1***2");
+        act.Should().Throw<FormatException>();
     }
 
     [Fact]
     public void When_HeaderHasUnclosedBracket_Then_ShouldThrow()
     {
         var calc = new StringCalculator();
-        Assert.Throws<FormatException>(() => calc.Sum("//[***\n1***2"));
+        var act = () => calc.Sum("//[***\n1***2");
+        act.Should().Throw<FormatException>();
     }
 
     [Fact]
     public void When_HeaderHasEmptyDelimiter_Then_ShouldThrow()
     {
         var calc = new StringCalculator();
-        Assert.Throws<FormatException>(() => calc.Sum("//[]\n1"));
+        var act = () => calc.Sum("//[]\n1");
+        act.Should().Throw<FormatException>();
     }
 
     [Fact]
     public void When_HeaderHasSingleWithoutBracketsButMoreThanOneChar_Then_ShouldThrow()
     {
         var calc = new StringCalculator();
-        Assert.Throws<FormatException>(() => calc.Sum("//ab\n1ab2"));
+        var act = () => calc.Sum("//ab\n1ab2");
+        act.Should().Throw<FormatException>();
     }
 
     [Fact]
     public void When_HeaderHasEmptyAndNonEmptyDelimiters_Then_ShouldThrow()
     {
         var calc = new StringCalculator();
-        Assert.Throws<FormatException>(() => calc.Sum("//[][;]\n1;2"));
+        var act = () => calc.Sum("//[][;]\n1;2");
+        act.Should().Throw<FormatException>();
     }
 }
