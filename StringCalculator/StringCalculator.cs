@@ -6,6 +6,24 @@ public class StringCalculator
     {
         if (string.IsNullOrEmpty(input)) 
             return 0;
+
+        if (input.StartsWith("//"))
+        {
+            var nl = input.IndexOf('\n');
+            if (nl < 0) throw new FormatException("Invalid header");
+            
+            var header = input.Substring(2, nl - 2);
+            if (header.Length != 1) throw new FormatException("Only single-char delimiter");
+            
+            var body = input.Substring(nl + 1);
+            var partsCustom = body.Split(header[0], StringSplitOptions.RemoveEmptyEntries);
+            
+            var numbersCustom = Parse(partsCustom);
+            
+            ThrowIfNegatives(numbersCustom);
+            
+            return SumNumbers(numbersCustom);
+        }
         
         var parts = Parts(input);
         var numbers = Parse(parts);
